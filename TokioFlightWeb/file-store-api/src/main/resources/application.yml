@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: file-store-appi
+
+server:
+  port: 8081
+
+# Actuator:
+# Activar endpoints predefinidos: management.endpoints.web.exposure.include= .....
+# Desactivar un edpoint: management.endpoint.health.enable= false/true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, bean
+  endpoint:
+    health:
+      enabled: false
+
+# Dinamic resource path
+application:
+  store:
+    absolute-path: C:\Users\andre\eclipse-workspace\GitLab\TokioSpringLast\store
+    relative-path: ..\store
