@@ -23,4 +23,4 @@ CREATE TABLE flights
 INSERT INTO flights (id, `number`, airport_departure_id, airport_arrival_id, departure_time, status, capacity,
                      occupancy)
 VALUES (1, 'BCN0001', 'BCN', 'GLA',now(), 'SCHEDULED', 100, 30),
-       (2, 'BCN0002', 'BCN', 'GLA',now()+20, 'CANCELLED', 30, 30);
+       (2, 'BCN0002', 'BCN', 'GLA',now(), 'CANCELLED', 30, 30);
