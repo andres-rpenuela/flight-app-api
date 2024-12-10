@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("mail")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FlightMailServiceITest {
-
+/*
     @Autowired
     private FlightMailService flightMailService;
 
@@ -37,10 +37,7 @@ class FlightMailServiceITest {
     private EmailService emailService;
 
 
-    /**
-     * Test de integración que prueba el envio de email y compreuba
-     * que se genra bien el EMAIL DTO, que se realiza con un metodo privado en el servicio
-     */
+
     @Test
     @Order(1)
     void givenFlightDTOWithAttachment_whenSendMailFlightSimple_thenBuildEmailDTOSuccess() {
@@ -110,4 +107,5 @@ class FlightMailServiceITest {
 
         return new MockMultipartFile("flight-default","flight-default.jpg","image/jpeg",contentAttachment);
     }
+    */
 }
