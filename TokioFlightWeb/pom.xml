@@ -9,6 +9,14 @@
 	<name>flight-app</name>
 	<description>Flight App para tokioschool</description>
 
+	<modules>
+		<module>file-store-api</module>
+		<module>flight-web</module>
+	</modules>
+
+
+	<packaging>pom</packaging>
+
 	<properties>
 		<java.version>22</java.version>
 		<maven.compiler.source>22</maven.compiler.source>
