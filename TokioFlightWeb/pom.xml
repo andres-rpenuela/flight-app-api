@@ -12,6 +12,7 @@
 	<modules>
 		<module>file-store-api</module>
 		<module>flight-web</module>
+		<module>books-api</module>
 	</modules>
 
 	<packaging>pom</packaging>
@@ -22,8 +23,8 @@
 		<maven.compiler.target>22</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<springboot.version>3.3.2</springboot.version>
-		<spring-boot-maven-plugin.version>3.2.2</spring-boot-maven-plugin.version>
+		<springboot.version>3.4.0</springboot.version>
+		<spring-boot-maven-plugin.version>3.4.0</spring-boot-maven-plugin.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 		<tsid-creator.version>5.2.5</tsid-creator.version>
 		<boostrap.version>5.3.3</boostrap.version>
@@ -56,6 +57,12 @@
 				<groupId>com.tokioschool</groupId>
 				<artifactId>flight-web</artifactId>
 				<version>${version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.tokioschool</groupId>
+				<artifactId>books-api</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
