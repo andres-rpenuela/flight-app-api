@@ -1,14 +1,17 @@
 package com.tokioschool.bookapp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.List;
 
 @Builder
-@Value
+@Data
 @Jacksonized
+@AllArgsConstructor @NoArgsConstructor
 public class BookDTO {
 
     int id;
