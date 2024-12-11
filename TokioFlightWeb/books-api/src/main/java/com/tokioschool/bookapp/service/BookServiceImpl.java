@@ -33,8 +33,10 @@ public class BookServiceImpl implements BookService {
                 .toList();
 
         books = IntStream.range(1, 101)
-                .mapToObj(i -> Book.builder().title(faker.book().title())
-                        .gender(faker.book().genre())
+                .mapToObj(i -> Book.builder()
+                        .id(i)
+                        .title(faker.book().title())
+                        .genre(faker.book().genre())
                         .authors(List.of(authors.get( (int) (Math.random() * 10))))
                         .build())
                 .toList();
@@ -69,7 +71,7 @@ public class BookServiceImpl implements BookService {
                         .map(StringUtils::lowerCase)
                         .map(genre ->
                                 books.stream()
-                                        .filter(book -> book.getGender().toLowerCase().contains(genre))
+                                        .filter(book -> book.getGenre().toLowerCase().contains(genre))
                                         .toList())
                         .orElseGet(()->books);
 
@@ -123,7 +125,7 @@ public class BookServiceImpl implements BookService {
                 .id(nextBookId())
                 .authors(Collections.singletonList(authors.get(bookRequestDTO.getAuthorId())))
                 .title(bookRequestDTO.getTitle())
-                .gender(bookRequestDTO.getGenre())
+                .genre(bookRequestDTO.getGenre())
                 .build();
 
         return modelMapper.map(book, BookDTO.class);
@@ -143,7 +145,7 @@ public class BookServiceImpl implements BookService {
 
         // update
         book.setTitle(bookRequestDTO.getTitle());
-        book.setGender(bookRequestDTO.getGenre());
+        book.setGenre(bookRequestDTO.getGenre());
         book.setAuthors(Collections.singletonList(author));
 
         books.add(posBook, book);

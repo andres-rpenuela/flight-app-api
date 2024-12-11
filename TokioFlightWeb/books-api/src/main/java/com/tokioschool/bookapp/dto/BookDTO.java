@@ -17,5 +17,5 @@ public class BookDTO {
     int id;
     String title;
     String genre;
-    List<Integer> authorId;
+    List<Integer> authorsId;
 }
