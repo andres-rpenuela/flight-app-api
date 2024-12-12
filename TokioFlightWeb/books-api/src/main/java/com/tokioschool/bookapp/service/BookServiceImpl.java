@@ -160,4 +160,21 @@ public class BookServiceImpl implements BookService {
 
 
     }
+
+    @Override
+    public BookDTO editBookGenre(int bookId, BookRequestDTO bookRequestDTO) {
+        Book book = books.stream().filter(book1 -> book1.getId() == bookId)
+                .findFirst()
+                .orElseThrow(()->new NotFoundException("Book with id %d not found".formatted(bookId)));
+        // get pox
+        int posBook = books.indexOf(book);
+
+        // update
+        book.setGenre(bookRequestDTO.getGenre());
+
+        books.remove(posBook);
+        books.add(posBook, book);
+
+        return modelMapper.map(book, BookDTO.class);
+    }
 }

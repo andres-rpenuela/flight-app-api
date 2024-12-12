@@ -10,4 +10,5 @@ public interface BookService {
     void deleteBookById(int id) throws NotFoundException;
     BookDTO createBook(BookRequestDTO bookRequestDTO) throws NotFoundException;
     BookDTO editBook(int bookId, BookRequestDTO bookRequestDTO) throws NotFoundException;
+    BookDTO editBookGenre(int bookId,BookRequestDTO bookRequestDTO);
 }
