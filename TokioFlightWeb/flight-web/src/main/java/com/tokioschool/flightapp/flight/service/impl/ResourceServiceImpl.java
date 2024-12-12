@@ -4,11 +4,12 @@ import com.tokioschool.flightapp.flight.domain.Resource;
 import com.tokioschool.flightapp.flight.dto.ResourceDto;
 import com.tokioschool.flightapp.flight.repository.ResourceDao;
 import com.tokioschool.flightapp.flight.service.ResourceService;
-import com.tokioschool.flightapp.store.dto.ResourceContentDto;
-import com.tokioschool.flightapp.store.dto.ResourceIdDto;
-import com.tokioschool.flightapp.store.service.StoreService;
+import com.tokioschool.flightapp.flight.store.StoreFacade;
+import com.tokioschool.flightapp.flight.store.dto.ResourceContentDto;
+import com.tokioschool.flightapp.flight.store.dto.ResourceIdDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ import java.util.UUID;
 public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceDao resourceDao;
-    private final StoreService storeService;
+    @Qualifier("storeFacadeRestClientImpl")
+    private final StoreFacade storeFacade;
 
     private final ModelMapper modelMapper;
 
@@ -41,18 +43,18 @@ public class ResourceServiceImpl implements ResourceService {
          Optional<ResourceDto> resourceDtoOpt = populationCreateOrUpdate(resource, multipartFile, description);
 
         if(resourceDtoOpt.isPresent()) {
-            storeService.deleteResource(resourceIdOld);
+            storeFacade.deleteResource(resourceIdOld);
         }
         return resourceDtoOpt;
     }
 
     protected Optional<ResourceDto> populationCreateOrUpdate(@NonNull Resource resource, MultipartFile multipartFile, String description){
-        final Optional<ResourceIdDto> resourceIdDtoOpt = storeService.saveResource(multipartFile, description);
+        final Optional<ResourceIdDto> resourceIdDtoOpt = storeFacade.saveResource(multipartFile, description);
 
         if(resourceIdDtoOpt.isEmpty())
             return Optional.empty();
 
-        ResourceContentDto resourceContentDto = storeService.findResource(resourceIdDtoOpt.get().resourceId())
+        ResourceContentDto resourceContentDto = storeFacade.findResource(resourceIdDtoOpt.get().resourceId())
                 .orElseThrow(()->new IllegalArgumentException("%s don't find in local, before created!"
                         .formatted(resourceIdDtoOpt.get().resourceId())));
 
@@ -62,7 +64,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
     @Override
     public ResourceDto getResourceContent(UUID resourceId) {
-        return storeService.findResource(resourceId).map(ResourceServiceImpl::mapperResourceContentToResourceDto)
+        return storeFacade.findResource(resourceId).map(ResourceServiceImpl::mapperResourceContentToResourceDto)
                 .orElseThrow(()-> new IllegalArgumentException("%s not found!".formatted(resourceId)));
     }
 
@@ -73,7 +75,7 @@ public class ResourceServiceImpl implements ResourceService {
         resourceDao.findByResourceId(resourceId)
                   .ifPresent(element -> {
                       resourceDao.delete(element);
-                      storeService.deleteResource(resourceId);
+                      storeFacade.deleteResource(resourceId);
                   });
 
     }

@@ -9,9 +9,9 @@
 <head th:replace="~{/flight/fragments/common/head :: head('FligthApp')}">
 <body>
 <header>
-    <nav th:replace="~{/flight/fragments/common/nav}"/>
+    <nav th:replace="~{/flight/fragments/common/nav}"></nav>
 </header>
-<div class="row py-5 container" sec:authentication="isAuthenticated()" sec:authorize="hasAuthority('ADMIN')">
+<div class="row py-5 container" sec:authorize="hasAuthority('ADMIN')">
     <div class="row">
         <h1 class="border-bottom">Flights.</h1>
     </div>
@@ -150,6 +150,6 @@
 <footer class="container">
     Footer Sticky
 </footer>
-<script th:replace="~{flight/fragments/common/scripts}"/>
+<script th:replace="~{flight/fragments/common/scripts}"></script>
 </body>
 </html>
