@@ -83,3 +83,8 @@ management:
     health:
       enabled: false
 # Dinamic resource path, define in applicaion.yml of file-store-api
+
+# external service
+application:
+  store:
+    base-url: http://localhost:8081

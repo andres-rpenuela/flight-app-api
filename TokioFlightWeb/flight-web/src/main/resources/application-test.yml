@@ -94,3 +94,9 @@ management:
 # para solventarlo debe empezar con /NameFolderOrFile or NomeFolderOrFile
 # o cambiar el tipo de objeto a Stirng y luego crear el path
 # Dinamic resource path, define in applicaion.yml of file-store-api
+
+
+# external service
+application:
+  store:
+    base-url: http://localhost:8081
