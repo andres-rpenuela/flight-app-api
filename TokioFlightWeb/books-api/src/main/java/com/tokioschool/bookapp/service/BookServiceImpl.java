@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,18 +29,20 @@ public class BookServiceImpl implements BookService {
     public void postConstruct() {
         final Faker faker = new Faker();
 
-        authors = IntStream.range(1, 11)
+        authors = new ArrayList<>();
+        IntStream.range(1, 11)
                 .mapToObj(i-> Author.builder().id(i).name(faker.book().author()).build())
-                .toList();
+                .forEach(authors::add);
 
-        books = IntStream.range(1, 101)
+        books = new ArrayList<>();
+        IntStream.range(1, 101)
                 .mapToObj(i -> Book.builder()
                         .id(i)
                         .title(faker.book().title())
                         .genre(faker.book().genre())
                         .authors(List.of(authors.get( (int) (Math.random() * 10))))
                         .build())
-                .toList();
+                .forEach(books::add);
     }
 
     public AuthorDTO getAuthorById(int id) {
@@ -126,8 +129,10 @@ public class BookServiceImpl implements BookService {
                 .authors(Collections.singletonList(authors.get(bookRequestDTO.getAuthorId())))
                 .title(bookRequestDTO.getTitle())
                 .genre(bookRequestDTO.getGenre())
+                .authors(Collections.singletonList(author))
                 .build();
 
+        books.add(book);
         return modelMapper.map(book, BookDTO.class);
     }
 
@@ -148,6 +153,7 @@ public class BookServiceImpl implements BookService {
         book.setGenre(bookRequestDTO.getGenre());
         book.setAuthors(Collections.singletonList(author));
 
+        books.remove(posBook);
         books.add(posBook, book);
 
         return modelMapper.map(book, BookDTO.class);
