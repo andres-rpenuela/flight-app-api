@@ -6,6 +6,11 @@ import com.tokioschool.flightapp.store.dto.ResourceContentDto;
 import com.tokioschool.flightapp.store.dto.ResourceDescriptionDto;
 import com.tokioschool.flightapp.store.dto.ResourceIdDto;
 import com.tokioschool.flightapp.store.service.StoreService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +27,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/store/api/resources")
 @Validated // de spring
+@Tag(name="resources", description= "resource operations")
 public class ResourceApiController {
 
     private final StoreService storeService;
 
+    @Operation(
+            summary = "Get resource by resourceId",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "resource",
+                            content = @Content(schema = @Schema(implementation = ResourceContentDto.class))
+                    )
+            }
+    )
     @GetMapping(value = "/{resourceId}",produces = "application/json")
     public ResponseEntity<ResourceContentDto> getResourceHandler(
             @NotNull @PathVariable UUID resourceId) {
