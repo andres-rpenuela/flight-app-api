@@ -6,6 +6,7 @@ import com.tokioschool.flightapp.store.dto.ResourceContentDto;
 import com.tokioschool.flightapp.store.dto.ResourceDescriptionDto;
 import com.tokioschool.flightapp.store.dto.ResourceIdDto;
 import com.tokioschool.flightapp.store.service.StoreService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,11 @@ public class ResourceApiController {
                 .orElseThrow(() -> new InternalErrorException("There's been an error, try it again later"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resourceIdDto);
+    }
+
+    @DeleteMapping(value="/{resourceId}")
+    public ResponseEntity<Void> deleteResourceHandler(@Valid @NotNull @PathVariable UUID resourceId) {
+        storeService.deleteResource(resourceId);
+        return ResponseEntity.noContent().build();
     }
 }
