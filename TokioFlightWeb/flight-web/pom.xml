@@ -128,10 +128,11 @@
         </dependency>
 
         <!-- modulo internal -->
-        <dependency>
-            <groupId>com.tokioschool</groupId>
-            <artifactId>file-store-api</artifactId>
-        </dependency>
+<!--        SE CREA COMO UNA API APARTE, POR LO QUE SE CONSUMIRA SUS SERVICIOS-->
+<!--        <dependency>-->
+<!--            <groupId>com.tokioschool</groupId>-->
+<!--            <artifactId>file-store-api</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

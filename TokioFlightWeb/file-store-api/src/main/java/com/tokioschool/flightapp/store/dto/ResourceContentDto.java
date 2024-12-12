@@ -1,11 +1,13 @@
 package com.tokioschool.flightapp.store.dto;
 
 import lombok.Builder;
+import lombok.extern.jackson.Jacksonized;
 
 import java.util.Arrays;
 import java.util.UUID;
 
 @Builder
+@Jacksonized
 public record ResourceContentDto(UUID resourceId,byte[] content,String resourceName,String contentType,String description,int size) {
     @Override
     public boolean equals(Object o) {

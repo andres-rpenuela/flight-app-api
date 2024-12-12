@@ -37,13 +37,16 @@
                 <Pattern>%d %p %C{1} [%t] %m%n</Pattern>
             </encoder>
             <!-- Política de rotado de logs: diario y cuando el fichero llegue a los 10 MB -->
-            <rollingPolicy
-                    class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>${LOG_DIR}/${LOG_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-                <timeBasedFileNamingAndTriggeringPolicy
-                        class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>10MB</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- Rolling policy -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- File name pattern with date and index -->
+                <fileNamePattern>${LOG_DIR}//${LOG_NAME}-application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <!-- Maximum size of each file -->
+                <maxFileSize>10MB</maxFileSize>
+                <!-- Retain logs for 30 days -->
+                <maxHistory>30</maxHistory>
+                <!-- Total size cap for all log files -->
+                <totalSizeCap>1GB</totalSizeCap>
             </rollingPolicy>
         </appender>
 
@@ -63,8 +66,4 @@
      seleccion de las trazas a mostrar y su nivel propios, (precede esto a lo inidcado en el root), es decir,
     muestra el nivel que se indica para las trazas que se producen en los paquetes especificados, de lo contrario,
     apica el level del root, además, esto puede ser definido a nivel de application.xml como propiedad -->
-    <logger name="com.tokioschool.flightapp.base" level="trace"/>
-    <logger name="org.h2" level="trace"/>
-    <logger name="liquibase.sqlgenerator" level="info"/>
-    <logger name="com.tokioschool.flightapp.flight.configuration.logging.LoggerConfiguration" level="debug"/>
 </configuration>
