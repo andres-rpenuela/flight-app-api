@@ -44,7 +44,7 @@ spring:
       tracking-modes: COOKIE
     # Multipart
     multipart:
-      max-file-size: 2MB
+      max-file-size: 10MB
   # Email
   mail:
     host: smtp.gmail.com

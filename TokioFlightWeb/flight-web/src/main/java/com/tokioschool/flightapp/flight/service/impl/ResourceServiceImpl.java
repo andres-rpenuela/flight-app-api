@@ -9,6 +9,7 @@ import com.tokioschool.flightapp.flight.store.dto.ResourceContentDto;
 import com.tokioschool.flightapp.flight.store.dto.ResourceIdDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceDao resourceDao;
+    @Qualifier("storeFacadeRestClientImpl")
     private final StoreFacade storeFacade;
 
     private final ModelMapper modelMapper;
