@@ -101,6 +101,8 @@ public class StoreFacadeRestClientImpl implements StoreFacade {
 
     @Override
     public void deleteResource(UUID resourceId) {
-
+            restClient.delete().uri("/store/api/resources/{resourceId}",resourceId)
+                    .retrieve()
+                    .toBodilessEntity();
     }
 }
