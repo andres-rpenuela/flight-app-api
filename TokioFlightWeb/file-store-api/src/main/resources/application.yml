@@ -17,8 +17,12 @@ management:
     health:
       enabled: false
 
-# Dinamic resource path
 application:
+  # Dinamic resource path
   store:
     absolute-path: C:\Users\andre\eclipse-workspace\GitLab\TokioSpringLast\store
     relative-path: ..\store
+  # JWT Token
+  jwt:
+    secret: RxmgLW5HLjX9vpXHZwwgUlEEffs5fBC
+    duration: PT1H
