@@ -63,7 +63,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     @Transactional
-    @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
+    //@PreAuthorize(value = "hasAnyAuthority('ADMIN')")
     public FlightDTO createFlight(FlightMvcDTO flightMvcDTO, MultipartFile multipartFile) {
         final Flight flight = createOrEdit(new Flight(),flightMvcDTO,multipartFile);
         return modelMapper.map(flight, FlightDTO.class);
@@ -72,7 +72,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     @Transactional
-    @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
+    //@PreAuthorize(value = "hasAnyAuthority('ADMIN')")
     public FlightDTO editFlight(FlightMvcDTO flightMvcDTO, MultipartFile multipartFile) {
         final Flight flight = createOrEdit(findFlightById(flightMvcDTO.getId()),flightMvcDTO,multipartFile);
         return modelMapper.map(flight, FlightDTO.class);

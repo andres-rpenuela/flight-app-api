@@ -17,10 +17,10 @@ public interface FlightService {
     FlightDTO findById(Long id);
     String getResourceIdByFlightId(Long id);
 
-    //@PreAuthorize(value = "hasAnyAuthority('ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
     FlightDTO createFlight(FlightMvcDTO flightMvcDTO, @Nullable MultipartFile multipartFile);
 
-    //@PreAuthorize(value = "hasAnyAuthority('ADMIN')")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
     FlightDTO editFlight(FlightMvcDTO flightMvcDTO, @Nullable MultipartFile multipartFile);
 
     List<FlightDTO> findAllFlights();
