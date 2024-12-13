@@ -1,4 +1,4 @@
-package com.tokioschool.flightapp.store.scurity.configuration;
+package com.tokioschool.flightapp.store.scurity.jwt.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

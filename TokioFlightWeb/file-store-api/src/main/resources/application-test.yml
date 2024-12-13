@@ -18,10 +18,23 @@ management:
       enabled: false
 
 application:
-  # Dinamic resource path
   store:
+    # Dinamic resource path
     absolute-path: C:\Users\andre\eclipse-workspace\GitLab\TokioSpringLast\store
     relative-path: ..\store
+    # User in memory
+    login:
+      users:
+        - username: consumer
+          # password = "password"
+          password: "{bcrypt}$2a$10$GRLdNijSQMUvl/au9fL.eDwmoohzzS7.rmNSJ5.0Fx0/BTk76klW"
+          authorities: read-rosurce
+          roles: USER
+        - username: producer
+          # password = "password"
+          password: "{bcrypt}$2a$10$GRLdNijSQMUvl/au9fL.eDwmoohzzS7.rmNSJ5.0Fx0/BTk76klW"
+          authorities: read-rosurce, write-resource
+          roles: USER, ADMIN
   # JWT Token
   jwt:
     secret: RxmgLW5HLjX9vpXHZwwgUlEEffs5fBC
