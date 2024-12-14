@@ -21,6 +21,8 @@ public class StoreApiSecurityConfiguration {
                 // gestion de securizar los endpoints
                 .securityMatcher("/store/api/**")
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/store/api/auth","/store/api/auth/**")
+                        .permitAll()
                         .requestMatchers(HttpMethod.POST,"/store/api/resources/")
                         .hasAuthority("write-resource")
                         .requestMatchers(HttpMethod.DELETE,"/store/api/resources/**")
