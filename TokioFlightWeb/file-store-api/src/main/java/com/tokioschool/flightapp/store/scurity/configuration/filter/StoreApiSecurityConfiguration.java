@@ -1,4 +1,4 @@
-package com.tokioschool.flightapp.store.scurity;
+package com.tokioschool.flightapp.store.scurity.configuration.filter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
