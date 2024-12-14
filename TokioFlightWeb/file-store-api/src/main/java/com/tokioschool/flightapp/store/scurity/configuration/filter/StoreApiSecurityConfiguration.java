@@ -21,7 +21,8 @@ public class StoreApiSecurityConfiguration {
                 // gestion de securizar los endpoints
                 .securityMatcher("/store/api/**")
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/store/api/auth","/store/api/auth/**")
+                        //.requestMatchers("/store/api/auth","/store/api/auth/**")
+                        .requestMatchers("/store/api/auth")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST,"/store/api/resources/")
                         .hasAuthority("write-resource")
@@ -40,6 +41,8 @@ public class StoreApiSecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 // corfs por defecto para recibir petionces del localhost
                 .cors(Customizer.withDefaults())
+                // validacion de jwt (decodifcador)
+                .oauth2ResourceServer(oAuth2ResourceServerConfigurer -> oAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults()))
          .build();
     }
 }

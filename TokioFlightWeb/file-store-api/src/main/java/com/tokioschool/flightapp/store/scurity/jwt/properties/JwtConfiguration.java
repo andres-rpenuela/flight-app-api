@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -28,4 +29,12 @@ public class JwtConfiguration {
         ));
     }
 
+    /**
+     * Decoficiador de JWT
+     */
+    @Bean
+    public NimbusJwtDecoder nimbusJwtDecoder() {
+        return NimbusJwtDecoder.withSecretKey(
+                new SecretKeySpec(jwtConfigurationProperty.secret().getBytes(),"HMAC")).build();
+    }
 }
