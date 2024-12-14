@@ -33,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
                 .subject(userDetails.getUsername())
                 .expiresAt(Instant.now().plusMillis(jwtConfigurationProperty.expiration().toMillis() ))
                 .claim("authorities",
-                        userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority))
+                        userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                 .build();
 
         // signarute

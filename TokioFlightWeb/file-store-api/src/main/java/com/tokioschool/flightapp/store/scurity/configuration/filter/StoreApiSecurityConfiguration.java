@@ -1,5 +1,6 @@
 package com.tokioschool.flightapp.store.scurity.configuration.filter;
 
+import com.tokioschool.flightapp.store.scurity.jwt.converter.CustomJwtAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,7 +43,12 @@ public class StoreApiSecurityConfiguration {
                 // corfs por defecto para recibir petionces del localhost
                 .cors(Customizer.withDefaults())
                 // validacion de jwt (decodifcador)
-                .oauth2ResourceServer(oAuth2ResourceServerConfigurer -> oAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults()))
+                //.oauth2ResourceServer(oAuth2ResourceServerConfigurer -> oAuth2ResourceServerConfigurer.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oAuth2ResourceServerConfigurer -> oAuth2ResourceServerConfigurer.jwt(
+                        jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(
+                                new CustomJwtAuthenticationConverter()
+                        )
+                ))
          .build();
     }
 }
