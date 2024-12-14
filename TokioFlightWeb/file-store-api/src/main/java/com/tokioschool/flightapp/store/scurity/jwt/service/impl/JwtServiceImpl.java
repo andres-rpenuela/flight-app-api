@@ -1,6 +1,7 @@
-package com.tokioschool.flightapp.store.scurity.jwt;
+package com.tokioschool.flightapp.store.scurity.jwt.service.impl;
 
 import com.tokioschool.flightapp.store.scurity.jwt.properties.JwtConfigurationProperty;
+import com.tokioschool.flightapp.store.scurity.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,7 @@ import java.time.Instant;
 
 @Service
 @RequiredArgsConstructor
-public class JwtService {
+public class JwtServiceImpl implements JwtService {
 
     private final JwtConfigurationProperty jwtConfigurationProperty;
     private final NimbusJwtEncoder nimbusJwtEncoder;

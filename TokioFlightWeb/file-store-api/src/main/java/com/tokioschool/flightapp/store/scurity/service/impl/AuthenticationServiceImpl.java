@@ -1,6 +1,6 @@
 package com.tokioschool.flightapp.store.scurity.service.impl;
 
-import com.tokioschool.flightapp.store.scurity.jwt.JwtService;
+import com.tokioschool.flightapp.store.scurity.jwt.service.JwtService;
 import com.tokioschool.flightapp.store.scurity.dto.AuthenticatedMeResponseDTO;
 import com.tokioschool.flightapp.store.scurity.dto.AuthenticationRequestDTO;
 import com.tokioschool.flightapp.store.scurity.dto.AuthenticationResponseDTO;
