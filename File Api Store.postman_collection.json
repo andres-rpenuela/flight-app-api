@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "44e302b4-722c-4863-82c2-9550834d4546",
+		"name": "File Api Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "6232761"
+	},
+	"item": [
+		{
+			"name": "Get Resource",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/store/api/resources/f28506cb-626d-4919-b603-9deaaacd645e"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Resource",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "description",
+							"value": "{\n    \"description\":\"avion en cielo azul\"\n}",
+							"contentType": "application/json",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"contentType": "application/octet-stream",
+							"type": "file",
+							"src": "/C:/Users/andre/Pictures/flight.jpeg"
+						}
+					]
+				},
+				"url": "http://localhost:8081/store/api/resources"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Resource",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8081/store/api/resources/f28506cb-626d-4919-b603-9deaaacd645e"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Authentication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"consumer\",\r\n    \"password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/store/api/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Chek Authenticated",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MzQyMTY1MDAsInN1YiI6ImNvbnN1bWVyIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIiwicmVhZC1yZXNvdXJjZSJdfQ.zau87YuopBEi7NhbGKxmpj79LWYt1S1OunOS1Qlback"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/store/api/auth/me"
+			},
+			"response": []
+		}
+	]
+}
