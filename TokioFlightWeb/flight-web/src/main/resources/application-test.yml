@@ -102,5 +102,5 @@ application:
     base-url: http://localhost:8081
     # usuario
     user:
-      username: consumer
+      username: producer
       password: password
