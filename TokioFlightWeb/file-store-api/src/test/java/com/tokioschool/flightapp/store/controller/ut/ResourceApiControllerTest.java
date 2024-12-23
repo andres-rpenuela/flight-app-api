@@ -4,20 +4,28 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tokioschool.flightapp.store.controller.ResourceApiController;
 import com.tokioschool.flightapp.store.dto.ResourceContentDto;
+import com.tokioschool.flightapp.store.scurity.configuration.filter.StoreApiSecurityConfiguration;
 import com.tokioschool.flightapp.store.service.StoreService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -27,6 +35,11 @@ import java.util.UUID;
 
 @WebMvcTest(controllers = ResourceApiController.class) // obtiente solo el contexto del contraldor especificado
 @ActiveProfiles("test")
+@ContextConfiguration(classes = { // esto moqueará la seguridad
+        ResourceApiController.class, // Conrolador a textear
+        ResourceApiControllerTest.Init.class, // compnentes
+        StoreApiSecurityConfiguration.class, // aplicamos el modelo de seguridad
+})
 class ResourceApiControllerTest {
 
     @Autowired private MockMvc mockMvc;
@@ -36,6 +49,7 @@ class ResourceApiControllerTest {
 
 
     @Test
+    @WithMockUser(username = "username",authorities = "read-resource")
     void givenExistingResource_whenGet_thenReturnResourceOk() throws Exception {
         // Fases del test:
         // Prepare: prearar aquello que es neceario para la llamada
@@ -72,4 +86,12 @@ class ResourceApiControllerTest {
         Assertions.assertThat(response.content()).isEqualTo(resourceContentDto.content());
     }
 
+    @TestConfiguration
+    public static class Init {
+        // bien que utiliza el filtro de la cena
+        @Bean
+        public JwtDecoder jwtDecoder() {
+            return NimbusJwtDecoder.withSecretKey(new SecretKeySpec("SECRET".getBytes(), "HMAC")).build();
+        }
+    }
 }

@@ -5,6 +5,7 @@ import com.tokioschool.flightapp.store.core.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -55,4 +56,17 @@ public class ApiExceptionHandler {
     public Map<String, String> handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request) {
         return Map.of("message", ex.getMessage(),"request",request.getRequestURI());
     }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(BadCredentialsException.class)
+    public Map<String, String> handleBadCredentialsExceptionError(BadCredentialsException ex, HttpServletRequest request) {
+        return Map.of("message", ex.getMessage(),"request",request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public Map<String, String> handleInternalServerError(Exception ex, HttpServletRequest request) {
+        return Map.of("message", ex.getMessage(),"request",request.getRequestURI());
+    }
+
 }

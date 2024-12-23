@@ -88,3 +88,8 @@ management:
 application:
   store:
     base-url: http://localhost:8081
+    # usuario
+    user:
+      username: consumer
+      password: password
+
