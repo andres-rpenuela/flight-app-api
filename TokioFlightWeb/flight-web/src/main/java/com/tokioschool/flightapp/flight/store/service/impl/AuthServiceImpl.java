@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private long expiresIn;
 
     @Override
-    public String getAccessToken() {
+    public synchronized String getAccessToken() {
         // comprueba si es valdio el token aun
         if( System.currentTimeMillis() < expiresIn ) {
             return accessToken;
