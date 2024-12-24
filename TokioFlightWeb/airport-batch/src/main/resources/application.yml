@@ -9,7 +9,10 @@ spring:
   batch:
     jdbc:
       initialize-schema: ALWAYS
-
+  # gestion de jpa
+  jpa:
+    hibernate:
+      ddl-auto: validate
 server:
   port: 8082
 
