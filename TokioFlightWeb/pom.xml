@@ -13,7 +13,8 @@
 		<module>file-store-api</module>
 		<module>flight-web</module>
 		<module>books-api</module>
-	</modules>
+        <module>airport-batch</module>
+    </modules>
 
 	<packaging>pom</packaging>
 
