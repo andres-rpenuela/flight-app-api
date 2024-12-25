@@ -8,8 +8,11 @@ import com.tokioschool.flightapp.domain.AirportRaw;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
@@ -128,5 +131,16 @@ public class AirportCsvImporterBatchConfiguration {
                 .build();
     }
 
+    /**
+     * Defne las condiocines en que se van a ejecutar el bath meidnate el Job
+     */
+    @Bean
+    public Job importAirportCsvJob(Step importAirportCsvStep){
+        return new JobBuilder("import-airport-csv.job", jobRepository)
+                // incremento entero
+                .incrementer(new RunIdIncrementer())
+                .start(importAirportCsvStep)
+                .build();
+    }
 }
 
