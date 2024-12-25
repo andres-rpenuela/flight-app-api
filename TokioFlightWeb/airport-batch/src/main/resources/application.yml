@@ -7,6 +7,9 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   # tablas de spring bath gestionada de forma automatica
   batch:
+    job:
+      enabled: false
+    #  name: import-airport-csv.job
     jdbc:
       initialize-schema: ALWAYS
   # gestion de jpa
