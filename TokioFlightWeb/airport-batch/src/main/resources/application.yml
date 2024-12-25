@@ -8,7 +8,8 @@ spring:
   # tablas de spring bath gestionada de forma automatica
   batch:
     job:
-      name: import-airport-csv.job
+      enabled: false
+    #  name: import-airport-csv.job
     jdbc:
       initialize-schema: ALWAYS
   # gestion de jpa
