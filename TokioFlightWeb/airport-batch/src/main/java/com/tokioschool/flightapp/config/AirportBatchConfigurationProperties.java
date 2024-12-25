@@ -7,7 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Optional;
 
-@ConfigurationProperties(prefix = "application.bath")
+@ConfigurationProperties(prefix = "application.batch")
 public record AirportBatchConfigurationProperties(Path absolutePath,String relativePath) {
 
 

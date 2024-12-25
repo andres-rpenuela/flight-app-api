@@ -15,7 +15,7 @@ public class AirportCsvMapper implements FieldSetMapper<AirportCsv> {
     // cabecera del csv a leer
     public static final String[] AIRPORT_CSV_FIELDS = {
             "id",
-            "iden",
+            "ident",
             "type",
             "name",
             "latitude_deg",
@@ -30,7 +30,7 @@ public class AirportCsvMapper implements FieldSetMapper<AirportCsv> {
             "iata_code",
             "local_code",
             "home_link",
-            "wikipediaLink",
+            "wikipedia_link",
             "keywords"
     };
 
@@ -54,7 +54,7 @@ public class AirportCsvMapper implements FieldSetMapper<AirportCsv> {
                 .iataCode(readString(fieldSet.readString("iata_code")))
                 .localCode(readString(fieldSet.readString("local_code")))
                 .homeLink(readString(fieldSet.readString("home_link")))
-                .wikipediaLink(readString(fieldSet.readString("wikipediaLink")))
+                .wikipediaLink(readString(fieldSet.readString("wikipedia_link")))
                 .keywords(readListOfString(fieldSet.readString("keywords")))
                 .build();
     }

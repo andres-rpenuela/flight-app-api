@@ -50,7 +50,7 @@ public class AirportCsvImporterBatchConfiguration {
      */
     @Bean // se inyecta para el contexto del bath, por lo que es común para todos los baths
     public FlatFileItemReader<AirportCsv> airportCsvFlatFileItemReader(){
-        Path aiportCsvPath = airportBatchConfigurationProperties.loadFileAirportBathPath("airport.csv");
+        Path aiportCsvPath = airportBatchConfigurationProperties.loadFileAirportBathPath("airports.csv");
 
         FlatFileItemReader<AirportCsv> flatFileItemReader =  new FlatFileItemReader<AirportCsv>();
 
@@ -91,7 +91,7 @@ public class AirportCsvImporterBatchConfiguration {
     @StepScope
     public ItemProcessor<AirportCsv, AirportRaw> airportCsvFilterProcessor(
             //obtiene el id de la ejecuion
-            @Value("#{stepExecutionContext.jobExecution.id}") Long jobId
+            @Value("#{stepExecution.jobExecution.id}") Long jobId
     ){
         return new FunctionItemProcessor<>(
                 airportCsv -> (new AirportCsvItemFilter(jobId).filter(airportCsv))
@@ -142,5 +142,7 @@ public class AirportCsvImporterBatchConfiguration {
                 .start(importAirportCsvStep)
                 .build();
     }
+
+    // min 42:42
 }
 
