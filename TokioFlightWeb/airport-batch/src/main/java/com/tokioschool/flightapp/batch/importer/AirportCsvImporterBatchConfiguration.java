@@ -1,6 +1,7 @@
 package com.tokioschool.flightapp.batch.importer;
 
 import com.tokioschool.flightapp.batch.filter.AirportCsvItemFilter;
+import com.tokioschool.flightapp.batch.listener.AirportCsvImporterBatchListener;
 import com.tokioschool.flightapp.config.AirportBatchConfigurationProperties;
 import com.tokioschool.flightapp.csv.AirportCsv;
 import com.tokioschool.flightapp.csv.AirportCsvMapper;
@@ -43,6 +44,7 @@ public class AirportCsvImporterBatchConfiguration {
     private final EntityManagerFactory entityManagerFactory;
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
+    private final AirportCsvImporterBatchListener airportCsvImporterBatchListener;
 
     /**
      * Proceso de lectura de los datos
@@ -140,9 +142,8 @@ public class AirportCsvImporterBatchConfiguration {
                 // incremento entero
                 .incrementer(new RunIdIncrementer())
                 .start(importAirportCsvStep)
+                .listener(airportCsvImporterBatchListener)
                 .build();
     }
-
-    // min 42:42
 }
 
