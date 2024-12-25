@@ -1,0 +1,22 @@
+spring:
+  # conexion a bbdd
+  datasource:
+    url: jdbc:mariadb://localhost:3307:/airport-bath?createDatabaseIfNotExist=true
+    username: root
+    password: dbpw
+    driver-class-name: org.mariadb.jdbc.Driver
+  # tablas de spring bath gestionada de forma automatica
+  batch:
+    jdbc:
+      initialize-schema: ALWAYS
+  # gestion de jpa
+  jpa:
+    hibernate:
+      ddl-auto: validate
+server:
+  port: 8082
+
+application:
+  batch:
+    absolute-path: C:\Users\andre\eclipse-workspace\GitLab\TokioSpringLast\batch-working-files
+    relative-path: ..\batch-working-files
