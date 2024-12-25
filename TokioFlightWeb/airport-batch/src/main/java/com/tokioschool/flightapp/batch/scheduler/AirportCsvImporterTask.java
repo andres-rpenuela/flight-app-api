@@ -23,6 +23,7 @@ public class AirportCsvImporterTask {
     @Scheduled(initialDelay = 15, timeUnit = TimeUnit.SECONDS)
     public void launchImporterAirportCsvJob(){
         JobParameters jobParameters = new JobParametersBuilder()
+                .addString("jobExecutionId", UUID.randomUUID().toString())
                 .toJobParameters();
 
         try {
