@@ -27,10 +27,12 @@ public class AirportCsvImporterBatchListener implements JobExecutionListener {
                     , jobExecution.getStatus()
                     , jobExecution.getExitStatus().getExitDescription());
         } else {
-            log.info("Ending job: {}, status: {}, seconds: {}"
-                    , jobExecution.getJobInstance().getJobName()
-                    , jobExecution.getStatus()
-                    , ChronoUnit.SECONDS.between(jobExecution.getStartTime(), jobExecution.getEndTime()));
+            if(jobExecution.isStopping()) {
+                log.info("Ending job: {}, status: {}, seconds: {}"
+                        , jobExecution.getJobInstance().getJobName()
+                        , jobExecution.getStatus()
+                        , ChronoUnit.SECONDS.between(jobExecution.getStartTime(), jobExecution.getEndTime()));
+            }
         }
     }
 }

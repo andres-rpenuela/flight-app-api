@@ -8,7 +8,7 @@ spring:
   # tablas de spring bath gestionada de forma automatica
   batch:
     job:
-      name: export-airports-raw-job
+      name: import-airport-csv.job
     jdbc:
       initialize-schema: ALWAYS
   # gestion de jpa
