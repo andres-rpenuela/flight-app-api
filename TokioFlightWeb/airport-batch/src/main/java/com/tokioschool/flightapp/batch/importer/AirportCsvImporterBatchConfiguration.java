@@ -32,6 +32,7 @@ import java.nio.file.Path;
 public class AirportCsvImporterBatchConfiguration {
 
     private final AirportBatchConfigurationProperties airportBatchConfigurationProperties;
+    private final EntityManagerFactory entityManagerFactory;
 
     /**
      * Proceso de lectura de los datos
@@ -85,6 +86,19 @@ public class AirportCsvImporterBatchConfiguration {
         return new FunctionItemProcessor<>(
                 airportCsv -> (new AirportCsvItemFilter(jobId).filter(airportCsv))
         );
+    }
+
+    /**
+     * proceso de escritura
+     * @return
+     */
+    @Bean
+    public JpaItemWriter<AirportRaw> airportCsvItemWrite(){
+        JpaItemWriter<AirportRaw> jpaItemWriter = new JpaItemWriter<>();
+
+        // inyectaomos el gestor de entidad que proporciona Spring
+        jpaItemWriter.setEntityManagerFactory(entityManagerFactory);
+        return jpaItemWriter;
     }
 }
 
