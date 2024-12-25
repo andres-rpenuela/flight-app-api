@@ -8,8 +8,12 @@ import com.tokioschool.flightapp.domain.AirportRaw;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -33,6 +38,8 @@ public class AirportCsvImporterBatchConfiguration {
 
     private final AirportBatchConfigurationProperties airportBatchConfigurationProperties;
     private final EntityManagerFactory entityManagerFactory;
+    private final JobRepository jobRepository;
+    private final PlatformTransactionManager platformTransactionManager;
 
     /**
      * Proceso de lectura de los datos
@@ -100,5 +107,26 @@ public class AirportCsvImporterBatchConfiguration {
         jpaItemWriter.setEntityManagerFactory(entityManagerFactory);
         return jpaItemWriter;
     }
+
+    /**
+     * Flujo de ejecucion del bath, depende del reader y del writer
+     */
+    @Bean
+    public Step importAirportCsvStep(
+            ItemReader<AirportCsv> airportCsvItemReader,
+            ItemProcessor<AirportCsv,AirportRaw> airportCsvAirportRawItemProcessor
+    ){
+        // nombre y contexto donde se guarda los stpes
+        return new StepBuilder("import-airport-csv.step", jobRepository)
+                //ejecuta en bloques de 10 reader, 10 procesos, 10 writes...
+                .<AirportCsv,AirportRaw>chunk(10,platformTransactionManager)
+                // desde Spring 6+, no es necesario definir el scope de Bath en el ItemProcessor
+                .reader(airportCsvItemReader)
+                .processor(airportCsvAirportRawItemProcessor)
+                // el scope del proceso write, es difernte al reader y al item, por lo que se debe crear
+                .writer(airportCsvItemWrite())
+                .build();
+    }
+
 }
 
