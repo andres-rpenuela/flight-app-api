@@ -8,6 +8,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -21,7 +22,8 @@ public class AirportCsvImporterTask {
 
     @Scheduled(initialDelay = 15, timeUnit = TimeUnit.SECONDS)
     public void launchImporterAirportCsvJob(){
-        JobParameters jobParameters = new JobParametersBuilder().toJobParameters();
+        JobParameters jobParameters = new JobParametersBuilder()
+                .toJobParameters();
 
         try {
             jobLauncher.run(importAirportCsvJob,jobParameters);

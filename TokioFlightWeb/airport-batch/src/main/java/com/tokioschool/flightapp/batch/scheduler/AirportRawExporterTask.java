@@ -12,6 +12,8 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 /**
  * Componente para lanzar manualmente los jobs
  */
@@ -29,7 +31,9 @@ public class AirportRawExporterTask {
     )
     public void launchAirportRawExport(){
 
-        JobParameters jobParameter = new JobParametersBuilder().toJobParameters();
+        JobParameters jobParameter = new JobParametersBuilder()
+                .addString("jobExecutionId", UUID.randomUUID().toString())
+                .toJobParameters();
         try {
             jobLauncher.run(exportAirportJob,jobParameter);
         } catch (JobExecutionAlreadyRunningException
