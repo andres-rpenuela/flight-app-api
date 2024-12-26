@@ -1,4 +1,4 @@
-package com.tokioschool.flightapp.service;
+package com.tokioschool.flightapp.runner;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
