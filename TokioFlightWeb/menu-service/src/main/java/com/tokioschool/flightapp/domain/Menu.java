@@ -15,11 +15,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor @AllArgsConstructor
 @ToString // no recomendable en produccion
-@Document(collation = "menus")
+@Document(value = "menus")
 public class Menu {
     @Id private String id; // Son de tipo String (ObjectId)
 
-    @Field // opcional
     private Instant created;
 
     private String title;

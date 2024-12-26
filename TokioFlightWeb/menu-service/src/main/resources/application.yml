@@ -15,7 +15,7 @@ spring:
       username: root
       password: dbpw
       authentication-database: admin
-  
+      #auto-index-creation: true
   jpa:
     show-sql: true
   
