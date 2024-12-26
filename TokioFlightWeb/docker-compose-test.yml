@@ -21,3 +21,18 @@ services:
 #    volumes:
 #      - ../docker/redis-test:/data
 #    command: ["redis-server", "--appendonly", "yes"]
+  mongodb:
+    image: mongo:latest
+    container_name: mongdb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dbpw
+      MONGO_INITDB_DATABASE: db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ../docker/mongo-data:/data/db
+volumes:
+  mongo-data:
+    driver: local
