@@ -27,7 +27,7 @@ public class AirportCsvImporterBatchListener implements JobExecutionListener {
                     , jobExecution.getStatus()
                     , jobExecution.getExitStatus().getExitDescription());
         } else {
-            if(jobExecution.isStopping()) {
+            if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
                 log.info("Ending job: {}, status: {}, seconds: {}"
                         , jobExecution.getJobInstance().getJobName()
                         , jobExecution.getStatus()
