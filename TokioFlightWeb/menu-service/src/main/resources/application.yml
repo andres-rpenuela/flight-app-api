@@ -5,3 +5,22 @@ server:
 spring:
   application:
     name: Menu Service
+# Connection
+#spring.data.mongodb.uri=mongodb://admin:password@localhost:27017/my_shop
+  data:
+    mongodb:
+      host: localhost2
+      port: 27017
+      database: my_shop
+      username: admin
+      password: password
+      authentication-database: admin
+  
+  jpa:
+    show-sql: true
+  
+  # consultas mongo db
+  logging:
+    level:
+      org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+      org.mongodb.driver: DEBUG
