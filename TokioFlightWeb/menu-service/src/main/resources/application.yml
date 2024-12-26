@@ -6,14 +6,14 @@ spring:
   application:
     name: Menu Service
 # Connection
-#spring.data.mongodb.uri=mongodb://admin:password@localhost:27017/my_shop
+#spring.data.mongodb.uri=mongodb://admin:password@localhost:27017/db
   data:
     mongodb:
-      host: localhost2
+      host: localhost
       port: 27017
-      database: my_shop
-      username: admin
-      password: password
+      database: db
+      username: root
+      password: dbpw
       authentication-database: admin
   
   jpa:
