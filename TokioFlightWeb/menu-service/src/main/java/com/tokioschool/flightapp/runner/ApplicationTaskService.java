@@ -120,5 +120,11 @@ public class ApplicationTaskService implements ApplicationRunner {
                 beerStyleCountAggregates.getFirst().getStyle(),
                 beersWithStyle.size(),
                 beersWithNotStyle.size());
+
+        // get menus with style
+        List<Menu> menusWithStyle = menuDao.findByBeerIn( beersWithStyle.stream().map(Beer::getId).toList());
+        log.info("Menus with style {}: {}",
+                beersWithNotStyle.getFirst().getStyle(),
+                menusWithStyle.size());
     }
 }

@@ -6,8 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 //@Repository // optional el uso de la anotacion
 public interface MenuDao extends MongoRepository<Menu,String> {
@@ -74,5 +76,6 @@ public interface MenuDao extends MongoRepository<Menu,String> {
     // NO VALID, because: Invalid path reference beer.style;
     // filter by dbref
     //List<Menu> findByBeerStyleIgnoreCase(String lightLager);
-
+    // solved
+    List<Menu> findByBeerIn(Collection<UUID> beer);
 }
