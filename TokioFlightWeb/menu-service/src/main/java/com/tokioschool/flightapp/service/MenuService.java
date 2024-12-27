@@ -9,4 +9,6 @@ public interface MenuService {
     Collection<Menu> createRandomMenus();
 
     List<String> getMenusId();
+
+    List<Menu> findByVegetarianIsTrueOrderByTitle();
 }

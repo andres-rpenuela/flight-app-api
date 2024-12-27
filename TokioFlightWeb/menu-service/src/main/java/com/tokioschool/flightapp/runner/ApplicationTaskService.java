@@ -45,5 +45,12 @@ public class ApplicationTaskService implements ApplicationRunner {
         // Reucperar los ids de menus
         List<String> menusId = menuService.getMenusId();
         log.info("Menus ids: {}",String.join(", ",menusId));
+
+        // Filtar los menus vegetarias y ordernalos por titulo
+        List<Menu> vegetarianMenus = menuService.findByVegetarianIsTrueOrderByTitle();
+        log.info("Vegetarian menus: {}, first: {}, last: {} ",
+                vegetarianMenus.size(),
+                vegetarianMenus.getFirst().getTitle(),
+                vegetarianMenus.getLast().getTitle());
     }
 }

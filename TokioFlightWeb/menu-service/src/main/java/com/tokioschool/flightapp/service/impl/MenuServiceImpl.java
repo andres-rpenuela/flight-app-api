@@ -9,6 +9,7 @@ import com.tokioschool.flightapp.service.MenuService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -62,6 +64,11 @@ public class MenuServiceImpl implements MenuService {
                 .stream()
                 .map(Menu::getId)
                 .toList();
+    }
+
+    @Override
+    public List<Menu> findByVegetarianIsTrueOrderByTitle() {
+        return menuDao.findByVegetarianIsTrueOrderByTitle();
     }
 
 
