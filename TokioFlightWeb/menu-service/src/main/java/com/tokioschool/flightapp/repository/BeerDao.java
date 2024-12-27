@@ -19,4 +19,7 @@ public interface BeerDao extends MongoRepository<Beer, UUID> {
             }
     )
     List<BeerStyleCountAggregate> countByStyle();
+
+    List<Beer> findByStyleIgnoreCase(String style);
+    List<Beer> findByStyleIsNotIgnoreCase(String style);
 }

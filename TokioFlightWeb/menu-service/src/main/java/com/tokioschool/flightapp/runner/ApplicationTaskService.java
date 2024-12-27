@@ -1,5 +1,6 @@
 package com.tokioschool.flightapp.runner;
 
+import com.tokioschool.flightapp.domain.Beer;
 import com.tokioschool.flightapp.domain.Main;
 import com.tokioschool.flightapp.domain.Menu;
 import com.tokioschool.flightapp.projection.BeerStyleCountAggregate;
@@ -111,5 +112,13 @@ public class ApplicationTaskService implements ApplicationRunner {
         // cerveza más comun (projection)
         List<BeerStyleCountAggregate> beerStyleCountAggregates = beerDao.countByStyle();
         log.info("Beer Aggregate by Style: {}",beerStyleCountAggregates);
+
+        // get beer by style
+        List<Beer> beersWithStyle = beerDao.findByStyleIgnoreCase( beerStyleCountAggregates.getFirst().getStyle() );
+        List<Beer> beersWithNotStyle = beerDao.findByStyleIsNotIgnoreCase( beerStyleCountAggregates.getFirst().getStyle() );
+        log.info("Beer with style ({}) vs not: {} / {}",
+                beerStyleCountAggregates.getFirst().getStyle(),
+                beersWithStyle.size(),
+                beersWithNotStyle.size());
     }
 }
