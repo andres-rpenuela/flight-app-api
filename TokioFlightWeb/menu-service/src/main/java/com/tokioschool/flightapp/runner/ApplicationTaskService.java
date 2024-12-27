@@ -68,7 +68,7 @@ public class ApplicationTaskService implements ApplicationRunner {
 
         // Modify documents, via insert
         Menu vegetarianMenu = vegetarianMenus.get(0);
-        //vegetarianMenu.setVegetarian(false); // comento para no alterar en el resto de pruebas
+        vegetarianMenu.setVegetarian(false); // comentar para no alterar en el resto de pruebas
         menuService.updatedMenu(vegetarianMenu);
 
         long countByVegetarianIsTrue = menuDao.countByVegetarianIsTrue();
@@ -100,5 +100,7 @@ public class ApplicationTaskService implements ApplicationRunner {
         Menu menuAndMainsWithLettuceAndOthers = menuDao.findById( menuAndMainsWithLettuce.getId() ).get();
         log.info("Menus mains complete: {}", menuAndMainsWithLettuce.getMains());
         log.info("Menus mains lettuce: {}", menuAndMainsWithLettuceAndOthers.getMains());
+
+
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Getter @Setter
 @ToString
+@Builder
 @Document(collection = "beers",value = "beers")
 public class Beer extends UUIDDocument {
 

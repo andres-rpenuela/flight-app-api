@@ -1,15 +1,16 @@
 package com.tokioschool.flightapp.service.impl;
 
 import com.github.javafaker.Faker;
+import com.tokioschool.flightapp.domain.Beer;
 import com.tokioschool.flightapp.domain.Ingredient;
 import com.tokioschool.flightapp.domain.Main;
 import com.tokioschool.flightapp.domain.Menu;
+import com.tokioschool.flightapp.repository.BeerDao;
 import com.tokioschool.flightapp.repository.MenuDao;
 import com.tokioschool.flightapp.service.MenuService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -28,6 +28,7 @@ import java.util.stream.IntStream;
 public class MenuServiceImpl implements MenuService {
 
     private final MenuDao menuDao;
+    private final BeerDao beerDao;
     private final MongoTemplate mongoTemplate;
     private static Faker faker;
     private static SecureRandom secureRandom;
@@ -40,6 +41,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Collection<Menu> createRandomMenus() {
+        List<Beer> randomBeers = createdRandomBeers();
 
         List<Menu> menusToCreate = IntStream.range(0,100)
                 .mapToObj(i->
@@ -49,6 +51,7 @@ public class MenuServiceImpl implements MenuService {
                             .mains(createRandomMains(i))
                             .calories(BigDecimal.valueOf(secureRandom.nextDouble(300,1000)))
                             .vegetarian(secureRandom.nextBoolean())
+                            .beer( randomBeers.get( secureRandom.nextInt( randomBeers.size() )) )
                             .build()
                 ).toList();
 
@@ -128,5 +131,16 @@ public class MenuServiceImpl implements MenuService {
                         )
                         .build()
         ).toList();
+    }
+
+    public List<Beer> createdRandomBeers(){
+        List<Beer> beers = IntStream.range(0,50).mapToObj(
+                j -> Beer.builder()
+                        .name(faker.beer().name())
+                        .style(faker.beer().style())
+                        .build()
+        ).toList();
+
+        return beerDao.saveAll(beers);
     }
 }
