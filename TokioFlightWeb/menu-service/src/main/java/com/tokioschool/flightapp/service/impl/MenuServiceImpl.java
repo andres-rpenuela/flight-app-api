@@ -81,6 +81,15 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.findByIdWithMainsOrdered(id).orElseGet(() -> null);
     }
 
+    @Override
+    public void updatedMenu(Menu vegetarianMenu) {
+        // esto da error porque contiente un "id" el objeto
+        //menuDao.insert(vegetarianMenu);
+
+        // para ello, se usa
+        menuDao.save(vegetarianMenu);
+    }
+
 
     private List<Main> createRandomMains(int i){
         return IntStream.range(0,i).mapToObj(

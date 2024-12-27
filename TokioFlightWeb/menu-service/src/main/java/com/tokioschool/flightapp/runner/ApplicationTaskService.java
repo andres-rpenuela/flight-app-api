@@ -64,5 +64,14 @@ public class ApplicationTaskService implements ApplicationRunner {
         log.info("Menu 11 ordered: {}-{}",
                 menu11Ordered.getTitle(),
                 menu11Ordered.getMains().stream().map(Main::getName).toList());
+
+        // Modify documents, via insert
+        Menu vegetarianMenu = vegetarianMenus.get(0);
+        vegetarianMenu.setVegetarian(false);
+        menuService.updatedMenu(vegetarianMenu);
+
+        long countByVegetarianIsTrue = menuDao.countByVegetarianIsTrue();
+        log.info("Vegetarian menus: {}",countByVegetarianIsTrue);
+
     }
 }

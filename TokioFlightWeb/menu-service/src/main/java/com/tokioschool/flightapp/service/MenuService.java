@@ -15,4 +15,6 @@ public interface MenuService {
     Menu findById(String id);
 
     Menu findByIdWithMainsOrdered(String id);
+
+    void updatedMenu(Menu vegetarianMenu);
 }

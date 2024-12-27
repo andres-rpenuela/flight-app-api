@@ -20,4 +20,7 @@ public interface MenuDao extends MongoRepository<Menu,String> {
             }
     )
     Optional<Menu> findByIdWithMainsOrdered(String id);
+
+    // method query
+    long countByVegetarianIsTrue();
 }
