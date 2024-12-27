@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -50,6 +51,17 @@ public class MenuServiceImpl implements MenuService {
                 ).toList();
 
         return menuDao.insert(menusToCreate);
+    }
+
+    @Override
+    public List<String> getMenusId() {
+        Query query = new Query();
+        query.fields().include("_id");
+
+        return mongoTemplate.find(query,Menu.class)
+                .stream()
+                .map(Menu::getId)
+                .toList();
     }
 
 
