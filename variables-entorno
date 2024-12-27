@@ -1,0 +1,20 @@
+Las variables de entorno añade una protección
+
+1º agregar en el application.yml: ${name_var} como valor de la propiedad
+
+application:
+  custom: ${APPLICATION_CUSTOM} 
+
+2º Genear "jar", y crear una variable de entorno "APPLICATION_CUSTOM" o arrancar el proyecto con variables:
+
+....pApi\TokioFlightWeb>mvn clean package -pl :file-store-api
+
+SE PUEDE LANZAR DESDE:
+....pi\TokioFlightWeb>mvn spring-boot:run -pl :file-store-api -Dspring-boot.run.jvmArguments="-DAPPLICATION_CUSTOM=springboot-run -Dspring.profiles.active=test"
+
+O:
+...Api\TokioFlightWeb>mvn spring-boot:run -pl :file-store-api -Dspring-boot.run.jvmArguments="-DAPPLICATION_CUSTOM=springboot-run -Dspring.profiles.active=test"
+
+
+Mediante Java
+...\FlighAppApi\TokioFlightWeb>java -jar  -DAPPLICATION_CUSTOM=springboot-run -Dspring.profiles.active=test file-store-api\target\file-store-api-0.0.1-SNAPSHOT.jar
