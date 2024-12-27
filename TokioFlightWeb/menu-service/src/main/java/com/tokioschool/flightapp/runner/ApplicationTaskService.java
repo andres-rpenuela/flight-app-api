@@ -2,6 +2,8 @@ package com.tokioschool.flightapp.runner;
 
 import com.tokioschool.flightapp.domain.Main;
 import com.tokioschool.flightapp.domain.Menu;
+import com.tokioschool.flightapp.projection.BeerStyleCountAggregate;
+import com.tokioschool.flightapp.repository.BeerDao;
 import com.tokioschool.flightapp.repository.MenuDao;
 import com.tokioschool.flightapp.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class ApplicationTaskService implements ApplicationRunner {
 
     private final MenuService menuService;
     private final MenuDao menuDao;
+    private final BeerDao beerDao;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -106,6 +109,7 @@ public class ApplicationTaskService implements ApplicationRunner {
         //log.info("Menu with beer style: {}",lightLager.size());
 
         // cerveza más comun (projection)
-
+        List<BeerStyleCountAggregate> beerStyleCountAggregates = beerDao.countByStyle();
+        log.info("Beer Aggregate by Style: {}",beerStyleCountAggregates);
     }
 }
