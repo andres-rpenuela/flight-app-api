@@ -1,0 +1,26 @@
+
+server:
+  port: 8082
+
+spring:
+  application:
+    name: Menu Service
+# Connection
+#spring.data.mongodb.uri=mongodb://admin:password@localhost:27017/db
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: db
+      username: root
+      password: dbpw
+      authentication-database: admin
+      #auto-index-creation: true
+  jpa:
+    show-sql: true
+  
+  # consultas mongo db
+  logging:
+    level:
+      org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+      org.mongodb.driver: DEBUG
