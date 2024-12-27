@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -126,5 +129,22 @@ public class ApplicationTaskService implements ApplicationRunner {
         log.info("Menus with style {}: {}",
                 beersWithNotStyle.getFirst().getStyle(),
                 menusWithStyle.size());
+
+        // pagination
+        Page<Beer> page;
+        int i = 0;
+        do{
+            PageRequest pageRequest = PageRequest.of(i++,9, Sort.by(Sort.Direction.ASC, "name"));
+
+            page = beerDao.findAll(pageRequest);
+
+            log.info("Page {}/{}, elems: {} first: {}, last: {}",
+                    page.getNumber(),
+                    page.getTotalPages(),
+                    page.getNumberOfElements(),
+                    page.getContent().get(0),
+                    page.getContent().get( page.getContent().size() - 1 ));
+
+        }while( !page.isLast());
     }
 }

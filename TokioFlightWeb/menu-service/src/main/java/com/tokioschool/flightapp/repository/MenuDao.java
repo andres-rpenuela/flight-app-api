@@ -78,4 +78,5 @@ public interface MenuDao extends MongoRepository<Menu,String> {
     //List<Menu> findByBeerStyleIgnoreCase(String lightLager);
     // solved
     List<Menu> findByBeerIn(Collection<UUID> beer);
+
 }
