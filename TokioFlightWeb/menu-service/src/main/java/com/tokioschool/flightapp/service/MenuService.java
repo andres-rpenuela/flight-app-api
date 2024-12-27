@@ -24,4 +24,6 @@ public interface MenuService {
     List<Menu> findByMainsNameCaseInsensitive(String name);
 
     List<Menu> findByCaloriesGreaterThan(BigDecimal calories);
+
+    Double findByCaloriesAverage();
 }

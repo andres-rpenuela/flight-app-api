@@ -4,7 +4,6 @@ import com.tokioschool.flightapp.domain.Menu;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,4 +45,11 @@ public interface MenuDao extends MongoRepository<Menu,String> {
 
     // mehtod query
     List<Menu> findByCaloriesGreaterThan(BigDecimal calories);
+
+    // mongo db en algunas versioens no soprota bigdecimal
+    @Aggregation(
+            // se debe agurar el "_id" y luego los campos, pero se puede ignoar el "id" poniendolo a null
+            pipeline =  "{ $group:  { _id: null,  total: { $avg:  '$calories' }} }"
+    )
+    Double findByCaloriesAverage();
 }

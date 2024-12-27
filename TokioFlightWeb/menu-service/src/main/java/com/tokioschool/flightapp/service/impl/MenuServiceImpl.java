@@ -106,6 +106,11 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.findByCaloriesGreaterThan(calories);
     }
 
+    @Override
+    public Double findByCaloriesAverage() {
+        return menuDao.findByCaloriesAverage();
+    }
+
 
     private List<Main> createRandomMains(int i){
         return IntStream.range(0,i).mapToObj(

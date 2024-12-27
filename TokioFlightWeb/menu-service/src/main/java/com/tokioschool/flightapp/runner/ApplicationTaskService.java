@@ -87,5 +87,9 @@ public class ApplicationTaskService implements ApplicationRunner {
         // filtar por valores numericos
         List<Menu> byCaloriesGreaterThan = menuService.findByCaloriesGreaterThan(BigDecimal.valueOf(650));
         log.info("Calories gt 650: {}",byCaloriesGreaterThan.size());
+
+        // calcular la media de calorias
+        Double averageCalories = menuService.findByCaloriesAverage();
+        log.info("Average calories: {}",averageCalories);
     }
 }
