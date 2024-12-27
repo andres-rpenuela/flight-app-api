@@ -34,10 +34,10 @@ public interface MenuDao extends MongoRepository<Menu,String> {
     @Query(value = """
         { mains: {
             $elemMatch: {
-                name: { 
+                name: {
                     $regex:  '?0',
                     $options:  'i'
-                }       
+                }
             } }
         }
     """ )
@@ -52,4 +52,22 @@ public interface MenuDao extends MongoRepository<Menu,String> {
             pipeline =  "{ $group:  { _id: null,  total: { $avg:  '$calories' }} }"
     )
     Double findByCaloriesAverage();
+
+    @Query(
+    value=
+        """
+            {
+                'mains.ingredients' : {
+                    $elemMatch: {
+                        name: {
+                            $regex: '?0',
+                            $options: 'i'
+                        }
+                    }
+                }
+            }
+        """,
+    // las condiciones de "mains.ingredients", son los que añade
+    fields = "{ 'mains.$' : 1 }" )
+    List<Menu> findMainsByIngredient(String ingredient);
 }

@@ -68,7 +68,7 @@ public class ApplicationTaskService implements ApplicationRunner {
 
         // Modify documents, via insert
         Menu vegetarianMenu = vegetarianMenus.get(0);
-        vegetarianMenu.setVegetarian(false);
+        //vegetarianMenu.setVegetarian(false); // comento para no alterar en el resto de pruebas
         menuService.updatedMenu(vegetarianMenu);
 
         long countByVegetarianIsTrue = menuDao.countByVegetarianIsTrue();
@@ -91,5 +91,14 @@ public class ApplicationTaskService implements ApplicationRunner {
         // calcular la media de calorias
         Double averageCalories = menuService.findByCaloriesAverage();
         log.info("Average calories: {}",averageCalories);
+
+        // Filtrar por un criterio nested y devolver (projectoin) los camos que hacen matching
+        List<Menu> menusWithMainsWithLettuce = menuDao.findMainsByIngredient("Lettuce");
+        log.info("Menus with mains lettuce: {}", menusWithMainsWithLettuce.size());
+        // minute 27
+        Menu menuAndMainsWithLettuce = menusWithMainsWithLettuce.getFirst();
+        Menu menuAndMainsWithLettuceAndOthers = menuDao.findById( menuAndMainsWithLettuce.getId() ).get();
+        log.info("Menus mains complete: {}", menuAndMainsWithLettuce.getMains());
+        log.info("Menus mains lettuce: {}", menuAndMainsWithLettuceAndOthers.getMains());
     }
 }
