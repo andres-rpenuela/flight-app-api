@@ -1,13 +1,19 @@
 package com.tokioschool.flightapp.runner;
 
+import com.tokioschool.flightapp.domain.Beer;
 import com.tokioschool.flightapp.domain.Main;
 import com.tokioschool.flightapp.domain.Menu;
+import com.tokioschool.flightapp.projection.BeerStyleCountAggregate;
+import com.tokioschool.flightapp.repository.BeerDao;
 import com.tokioschool.flightapp.repository.MenuDao;
 import com.tokioschool.flightapp.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -26,6 +32,7 @@ public class ApplicationTaskService implements ApplicationRunner {
 
     private final MenuService menuService;
     private final MenuDao menuDao;
+    private final BeerDao beerDao;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -68,7 +75,7 @@ public class ApplicationTaskService implements ApplicationRunner {
 
         // Modify documents, via insert
         Menu vegetarianMenu = vegetarianMenus.get(0);
-        //vegetarianMenu.setVegetarian(false); // comento para no alterar en el resto de pruebas
+        vegetarianMenu.setVegetarian(false); // comentar para no alterar en el resto de pruebas
         menuService.updatedMenu(vegetarianMenu);
 
         long countByVegetarianIsTrue = menuDao.countByVegetarianIsTrue();
@@ -100,5 +107,44 @@ public class ApplicationTaskService implements ApplicationRunner {
         Menu menuAndMainsWithLettuceAndOthers = menuDao.findById( menuAndMainsWithLettuce.getId() ).get();
         log.info("Menus mains complete: {}", menuAndMainsWithLettuce.getMains());
         log.info("Menus mains lettuce: {}", menuAndMainsWithLettuceAndOthers.getMains());
+
+        // invlaid filter by dbref
+        //List<Menu> lightLager = menuDao.findByBeerStyleIgnoreCase("Light Lager");
+        //log.info("Menu with beer style: {}",lightLager.size());
+
+        // cerveza más comun (projection)
+        List<BeerStyleCountAggregate> beerStyleCountAggregates = beerDao.countByStyle();
+        log.info("Beer Aggregate by Style: {}",beerStyleCountAggregates);
+
+        // get beer by style
+        List<Beer> beersWithStyle = beerDao.findByStyleIgnoreCase( beerStyleCountAggregates.getFirst().getStyle() );
+        List<Beer> beersWithNotStyle = beerDao.findByStyleIsNotIgnoreCase( beerStyleCountAggregates.getFirst().getStyle() );
+        log.info("Beer with style ({}) vs not: {} / {}",
+                beerStyleCountAggregates.getFirst().getStyle(),
+                beersWithStyle.size(),
+                beersWithNotStyle.size());
+
+        // get menus with style
+        List<Menu> menusWithStyle = menuDao.findByBeerIn( beersWithStyle.stream().map(Beer::getId).toList());
+        log.info("Menus with style {}: {}",
+                beersWithNotStyle.getFirst().getStyle(),
+                menusWithStyle.size());
+
+        // pagination
+        Page<Beer> page;
+        int i = 0;
+        do{
+            PageRequest pageRequest = PageRequest.of(i++,9, Sort.by(Sort.Direction.ASC, "name"));
+
+            page = beerDao.findAll(pageRequest);
+
+            log.info("Page {}/{}, elems: {} first: {}, last: {}",
+                    page.getNumber(),
+                    page.getTotalPages(),
+                    page.getNumberOfElements(),
+                    page.getContent().get(0),
+                    page.getContent().get( page.getContent().size() - 1 ));
+
+        }while( !page.isLast());
     }
 }

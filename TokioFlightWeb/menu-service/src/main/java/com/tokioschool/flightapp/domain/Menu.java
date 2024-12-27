@@ -2,6 +2,7 @@ package com.tokioschool.flightapp.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -29,4 +30,7 @@ public class Menu {
 
     @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal calories;
+
+    @DBRef
+    private Beer beer;
 }

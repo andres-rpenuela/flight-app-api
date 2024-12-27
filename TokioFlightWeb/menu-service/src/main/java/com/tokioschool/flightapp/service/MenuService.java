@@ -1,5 +1,6 @@
 package com.tokioschool.flightapp.service;
 
+import com.tokioschool.flightapp.domain.Beer;
 import com.tokioschool.flightapp.domain.Menu;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public interface MenuService {
     Collection<Menu> createRandomMenus();
+    Collection<Beer> createdRandomBeers();
 
     List<String> getMenusId();
 
