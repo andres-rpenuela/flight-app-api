@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -82,5 +83,9 @@ public class ApplicationTaskService implements ApplicationRunner {
 
         List<Menu> pizzaMenusByMainNameCI = menuService.findByMainsNameCaseInsensitive("pizza");
         log.info("Pizza menus case-insensitive: {}",pizzaMenusByMainNameCI.size());
+
+        // filtar por valores numericos
+        List<Menu> byCaloriesGreaterThan = menuService.findByCaloriesGreaterThan(BigDecimal.valueOf(650));
+        log.info("Calories gt 650: {}",byCaloriesGreaterThan.size());
     }
 }

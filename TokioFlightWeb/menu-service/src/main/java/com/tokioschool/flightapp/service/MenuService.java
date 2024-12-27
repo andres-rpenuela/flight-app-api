@@ -2,6 +2,7 @@ package com.tokioschool.flightapp.service;
 
 import com.tokioschool.flightapp.domain.Menu;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface MenuService {
     List<Menu> findByMainsNameCaseSensitive(String name);
 
     List<Menu> findByMainsNameCaseInsensitive(String name);
+
+    List<Menu> findByCaloriesGreaterThan(BigDecimal calories);
 }

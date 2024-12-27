@@ -101,6 +101,11 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.findByMainsNameCaseInsensitive(name);
     }
 
+    @Override
+    public List<Menu> findByCaloriesGreaterThan(BigDecimal calories) {
+        return menuDao.findByCaloriesGreaterThan(calories);
+    }
+
 
     private List<Main> createRandomMains(int i){
         return IntStream.range(0,i).mapToObj(
