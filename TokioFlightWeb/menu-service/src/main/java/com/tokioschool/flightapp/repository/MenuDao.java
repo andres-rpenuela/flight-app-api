@@ -70,4 +70,9 @@ public interface MenuDao extends MongoRepository<Menu,String> {
     // las condiciones de "mains.ingredients", son los que añade
     fields = "{ 'mains.$' : 1 }" )
     List<Menu> findMainsByIngredient(String ingredient);
+
+    // NO VALID, because: Invalid path reference beer.style;
+    // filter by dbref
+    //List<Menu> findByBeerStyleIgnoreCase(String lightLager);
+
 }

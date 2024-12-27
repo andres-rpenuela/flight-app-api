@@ -101,6 +101,11 @@ public class ApplicationTaskService implements ApplicationRunner {
         log.info("Menus mains complete: {}", menuAndMainsWithLettuce.getMains());
         log.info("Menus mains lettuce: {}", menuAndMainsWithLettuceAndOthers.getMains());
 
+        // invlaid filter by dbref
+        //List<Menu> lightLager = menuDao.findByBeerStyleIgnoreCase("Light Lager");
+        //log.info("Menu with beer style: {}",lightLager.size());
+
+        // cerveza más comun (projection)
 
     }
 }
