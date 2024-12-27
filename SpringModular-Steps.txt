@@ -1,0 +1,273 @@
+Project/
+  | - pom.xml
+  | - flight-dto/
+  |    |- src/
+  |    | | - main/
+  |    | |	| - java/
+  |    | |	|	|- com.tokiooshool.flightapp.dto/
+  |    | |	|		|-ProductDto.java
+  |    | |	| - resources/
+  |    | | - test
+  |    | -target
+  |    pom.xml
+  | - flight-web/
+  |    |- src/
+  |    | | - main/
+  |    | |	| - java/
+  |    | |	|	|- com.tokiooshool.flightapp.controller/
+  |    | |	|	|	|- FlightAppApplication.java
+  |    | |	|	|	| - controller/
+  |    | |	|	|	|	| -IndexApiController.java
+  |    | |	| - resources/
+  |    | | - test
+  |    | -target
+  |    pom.xml
+
+
+Step 1. Crear Project Spring
+Step 2. Modificar el pom del pom parent
+Step 3. Crear modulo java dto
+Step 3.1. Adaptar el pom del modulo
+Step 3.2. Adaptar el pom parent
+Step 3.3. Añadir código fuente
+Step 4. Crear modulo java web
+Step 4.1. Adaptar el pom del modulo
+Step 4.2. Adaptar el pom parent
+Step 4.3. Añadir código fuente
+Step 4.3. Añadir la clase principal
+Step 5. Step compilar: mvn clean install -U
+Step 5.1. En la carpeta "Project/flight-web", lanzar el comanzo "mvn spring:run", para verificar
+Step 5.2. En la carpeta "C:\Users\andre\.m2\repository\com\tokioschool\flight-web\0.0.1-SNAPSHOT", lanzar el comando "java -jar flight-dto-0.0.1-SNAPSHOT.jar"
+
+Nota para compilar un proyecto dado: mvn clean package -pl :[nombre del modulo] -DskipTest
+ejemplo A: 
+…e\TokioSpringFlighAppApi\TokioFlightWeb> mvn clean package -pl :file-store-api -DskipeTest
+…\TokioFlightWeb\file-store-api>java -jar target\file-store-api-0.0.1-SNAPSHOT.jar
+
+ejemplo B:
+…e\TokioSpringFlighAppApi\TokioFlightWeb>mvn clean package -pl :books-api -DskipeTest
+[INFO] Scanning for projects...
+
+
+// pom.xml parent
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.tokioschool</groupId>
+	<artifactId>flight-modular-app</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>FlightModularApp</name>
+	<description>FlightModularApp</description>
+	<modules>
+		<module>FlightDto</module>
+		<module>FlightWeb</module>
+	</modules>
+	<packaging>pom</packaging>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.modulith</groupId>
+				<artifactId>spring-modulith-bom</artifactId>
+				<version>${spring-modulith.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>3.4.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.tokioschool</groupId>
+				<artifactId>flight-dto</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.tokioschool</groupId>
+				<artifactId>flight-web</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<properties>
+		<java.version>22</java.version>
+		<maven.compiler.source>22</maven.compiler.source>
+		<maven.compiler.target>22</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<springboot.version>3.4.0</springboot.version>
+		<spring-boot-maven-plugin.version>3.2.2</spring-boot-maven-plugin.version>
+		<spring-modulith.version>1.3.0</spring-modulith.version>
+		<commons-lang3.version>3.12.0</commons-lang3.version>
+		<modelmapper.version>3.2.0</modelmapper.version>
+	</properties>
+
+	<dependencies>
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- external -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot-maven-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
+
+
+// pom.xml flight-dto
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.tokioschool</groupId>
+        <artifactId>flight-modular-app</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>flight-dto</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+// pom.xml flight-web
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.tokioschool</groupId>
+        <artifactId>flight-modular-app</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>flight-web</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tokioschool</groupId>
+            <artifactId>flight-dto</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.tokioschool.flightapp.FlightModularAppApplication</mainClass>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
