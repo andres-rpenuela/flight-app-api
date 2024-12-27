@@ -11,4 +11,8 @@ public interface MenuService {
     List<String> getMenusId();
 
     List<Menu> findByVegetarianIsTrueOrderByTitle();
+
+    Menu findById(String id);
+
+    Menu findByIdWithMainsOrdered(String id);
 }

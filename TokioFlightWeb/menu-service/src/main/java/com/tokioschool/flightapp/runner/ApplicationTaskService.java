@@ -1,5 +1,6 @@
 package com.tokioschool.flightapp.runner;
 
+import com.tokioschool.flightapp.domain.Main;
 import com.tokioschool.flightapp.domain.Menu;
 import com.tokioschool.flightapp.repository.MenuDao;
 import com.tokioschool.flightapp.service.MenuService;
@@ -52,5 +53,16 @@ public class ApplicationTaskService implements ApplicationRunner {
                 vegetarianMenus.size(),
                 vegetarianMenus.getFirst().getTitle(),
                 vegetarianMenus.getLast().getTitle());
+
+        // Ordenar por campos nested en los documentos
+        Menu menu11 = menuService.findById( menusId.get(11) );
+        log.info("Menu 11 non-ordered: {}-{}",
+                menu11.getTitle(),
+                menu11.getMains().stream().map(Main::getName).toList());
+
+        Menu menu11Ordered = menuService.findByIdWithMainsOrdered( menusId.get(11) );
+        log.info("Menu 11 ordered: {}-{}",
+                menu11Ordered.getTitle(),
+                menu11Ordered.getMains().stream().map(Main::getName).toList());
     }
 }

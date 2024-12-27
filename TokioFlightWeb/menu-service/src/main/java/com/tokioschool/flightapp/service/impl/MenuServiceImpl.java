@@ -71,6 +71,16 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.findByVegetarianIsTrueOrderByTitle();
     }
 
+    @Override
+    public Menu findById(String id) {
+        return menuDao.findById(id).orElseGet(()->null);
+    }
+
+    @Override
+    public Menu findByIdWithMainsOrdered(String id) {
+        return menuDao.findByIdWithMainsOrdered(id).orElseGet(() -> null);
+    }
+
 
     private List<Main> createRandomMains(int i){
         return IntStream.range(0,i).mapToObj(
