@@ -3,6 +3,7 @@ package com.tokioschool.flightapp.repository;
 import com.tokioschool.flightapp.domain.Menu;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,22 @@ public interface MenuDao extends MongoRepository<Menu,String> {
 
     // method query
     long countByVegetarianIsTrue();
+
+    // method query
+    List<Menu> findByMainsName(String name);
+    List<Menu> findByMainsNameIgnoreCase(String name);
+
+    // filtrando con query mongodb, donde se busca el camo mains.name sea igual al argmento de entrada "name" y
+    // aplique la opcion de sea "insenitive", pormedio del caracter 'i'
+    @Query(value = """
+        { mains: {
+            $elemMatch: {
+                name: { 
+                    $regex:  '?0',
+                    $options:  'i'
+                }       
+            } }
+        }
+    """ )
+    List<Menu> findByMainsNameCaseInsensitive(String name);
 }

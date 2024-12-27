@@ -17,4 +17,8 @@ public interface MenuService {
     Menu findByIdWithMainsOrdered(String id);
 
     void updatedMenu(Menu vegetarianMenu);
+
+    List<Menu> findByMainsNameCaseSensitive(String name);
+
+    List<Menu> findByMainsNameCaseInsensitive(String name);
 }

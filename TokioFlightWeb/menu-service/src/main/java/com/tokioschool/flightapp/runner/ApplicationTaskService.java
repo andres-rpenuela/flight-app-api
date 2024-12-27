@@ -73,5 +73,14 @@ public class ApplicationTaskService implements ApplicationRunner {
         long countByVegetarianIsTrue = menuDao.countByVegetarianIsTrue();
         log.info("Vegetarian menus: {}",countByVegetarianIsTrue);
 
+        // filtrar por texto, en un camo nested
+        List<Menu> pizzaMenusByMainName = menuService.findByMainsNameCaseSensitive("pizza");
+        log.info("Pizza menus case-sensitive: {}",pizzaMenusByMainName.size());
+
+        List<Menu> pizzaMenusByMainName2 = menuService.findByMainsNameCaseSensitive("Pizza");
+        log.info("Pizza menus case-sensitive: {}",pizzaMenusByMainName2.size());
+
+        List<Menu> pizzaMenusByMainNameCI = menuService.findByMainsNameCaseInsensitive("pizza");
+        log.info("Pizza menus case-insensitive: {}",pizzaMenusByMainNameCI.size());
     }
 }

@@ -90,6 +90,17 @@ public class MenuServiceImpl implements MenuService {
         menuDao.save(vegetarianMenu);
     }
 
+    @Override
+    public List<Menu> findByMainsNameCaseSensitive(String name) {
+        return menuDao.findByMainsName(name);
+    }
+
+    @Override
+    public List<Menu> findByMainsNameCaseInsensitive(String name) {
+        //return menuDao.findByMainsNameIgnoreCase(name);
+        return menuDao.findByMainsNameCaseInsensitive(name);
+    }
+
 
     private List<Main> createRandomMains(int i){
         return IntStream.range(0,i).mapToObj(
