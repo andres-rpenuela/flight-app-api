@@ -1,0 +1,7 @@
+FROM azul/zulu-openjdk-alpine:22-jre-headless-latest
+
+VOLUME /working-files
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+
+ENTRYPOINT ["java", "-jar", "-DAPPLICATION_CUSTOM=docker","-Dspring.profiles.active=docker","/app.jar"]
